@@ -1,16 +1,20 @@
 # 如何写组件？
 
-    通过storybook基于svelte、bootstrap4学些如何写自己的组件
+  通过storybook基于svelte、bootstrap4学些如何写自己的组件。
+
+  + 实用storybook主要便于组件的浏览、交互与测试
+  + 仅适用了bootstrap的样式
+  + 组件基于svelte开发
 
 
 ## 创建storybook目录
-
+<br/>
 - src/stories-svelte
   - Introduction.stories.mdx
   - button.stories.svelte
 
 ## 创建组件目录
-
+<br/>
 - src/components
   - index.ts
   - button
@@ -24,14 +28,14 @@
 ```
 
 ## 添加bootstrap样式
-
+<br/>
   修改配置svelte.config.js，从配置中引入bootstrap.scss。
 
   <span style="color:red;">通过vite配置引入无效</span>
 
 
   ```javascript
-  	preprocess: [
+  preprocess: [
       preprocess({
         postcss: true,
         scss: {
@@ -40,11 +44,11 @@
         },
         preserve: ['ld+json'],
       })
-	] ,
+	]
   ```
 
 ## 修改storybook配置
-  
+<br/>  
   必须配置后才能使用bootstrap样式，修改.storybook/main.js文件
 
   1. 配置addons
@@ -55,30 +59,30 @@
     "addons":[
       "@storybook/preset-scss"
     ]
-
   ```
    
   2. 配置svelteOptions
    
   ```javascript
-    "svelteOptions": {
-      "preprocess": [
-        sveltePreprocess({
-          postcss: true,
-          scss: {
-            prependData: `@import "bootstrap/scss/bootstrap.scss";`,
-            outputStyle: 'compressed',
-          },
-          preserve: ['ld+json'],
-        }),
-      ]
-    }
+  "svelteOptions": {
+    "preprocess": [
+      sveltePreprocess({
+        postcss: true,
+        scss: {
+          prependData: `@import "bootstrap/scss/bootstrap.scss";`,
+          outputStyle: 'compressed',
+        },
+        preserve: ['ld+json'],
+      }),
+    ]
+  }
   ```
 
 ## 创建组件
-
+<br/>
   在src/components目录中创建组件Button
-  src/components
+
+  - src/components
     - button
       - button.css
       - Button.svelte
@@ -117,7 +121,7 @@
 ```
 
 ## 编写Story
-
+<br/>
     在src/stories-svelte目录下创建Button.stories.svelte与.xmd文件
 
     编写Story主要使用了<Mate/> <Template> <Story> 三个标签。
@@ -125,8 +129,7 @@
     Template: 定义Story模板
     Story: 故事示例
 
-```svelte
-
+```xml
 <Meta
   title="Svelte/Button"
   component={Button}
@@ -149,20 +152,18 @@
     label: "Button",
   }}
 />
-
 ```
 
 ## 启动测试
-
-
+<br/>
   npm run storybook
 
-  --no-manager-cache
+  _有时候项目修改一直刷新无效，在启动storybook后可以添加--no-manager-cache_
 
   ![storybook](./docs/images/storybook.png)
 
 ## 总结
-
+<br/>
   1. 整个过程和开发组件一样，引入了storybook主要是方便组件的测试与预览
   2. 项目的配置和storybook是独立的
   3. storybook是基于CommonJs的，如果项目基于ESM，注意配置或通过tjs、mjs处理
