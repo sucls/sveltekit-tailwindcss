@@ -8,7 +8,12 @@ const config = {
 	// for more information about preprocessors
 	preprocess: [
 		preprocess({
-			postcss: true
+			postcss: true,
+			scss: {
+				prependData: `@import "bootstrap/scss/bootstrap.scss";`,
+				outputStyle: 'compressed',
+			},
+			preserve: ['ld+json'],
 		})
 	],
 
@@ -24,7 +29,13 @@ const config = {
 			  },
 			},
 			css: {
-				
+				//css预处理
+				preprocessorOptions: {
+					scss: {
+						//  无效？
+						additionalData: `@import "bootstrap/scss/bootstrap.scss";`
+					}
+				}
 			},
 			plugins:[
 				
